@@ -31,11 +31,37 @@ public class FormChat extends javax.swing.JFrame {
     public static String input;
     public static String serverResponse;
 
-    public FormChat() {
+    public FormChat() throws Exception {
+        sendKeyServer();
         initComponents();
+        
         this.setLocationRelativeTo(null);
 
     }
+    
+    private void sendKeyServer() throws Exception{
+         try {
+            socket = new Socket("localhost", 5000);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            
+            System.out.println("Tạo khóa và mã hóa khóa gửi cho sv");
+            AESClient.initKey(); //tạo khóa
+            String keyString = EncryptKeyAES.EncryptKeyWithRSA(); // mã hóa khóa
+            try {
+                out.write(keyString);
+                out.newLine();
+                out.flush();
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+            System.out.println("gửi key đã mã hóa thành công.");
+            
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+    
 //
 
     public void connectToServer(String input) {
@@ -100,6 +126,7 @@ public class FormChat extends javax.swing.JFrame {
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtArea.setRows(5);
+        txtArea.setToolTipText("");
         jScrollPane1.setViewportView(txtArea);
 
         jPanel1.add(jScrollPane1);
@@ -166,15 +193,23 @@ public class FormChat extends javax.swing.JFrame {
                 out.flush();
                 dongKetNoi();
             }
-
+            
+            
+            // Mã hóa gửi cho sv:
+            input = AESClient.encrypt(input);
             out.write(input + "\r\n");
             out.flush();
 
             // server response:
-            serverResponse = in.readLine() + "\r\n";
+            // Giải mã thông điệp từ sv
+            
+            serverResponse = AESClient.decrypt(in.readLine()) + "\r\n";
             // nếu response có chứa chuỗi "\t" thì sẽ thực hiện tách các tokens thành từng dòng in ra cho đẹp :>
-            if (serverResponse.contains("\t")) {
-                StringTokenizer st = new StringTokenizer(serverResponse, "\t");
+            System.out.println(serverResponse);
+            // Hin2h nhu cho nay
+            if (serverResponse.contains("tttt")) {
+//                System.out.println("ok chuaaaaaaaaaaa");
+                StringTokenizer st = new StringTokenizer(serverResponse, "tttt", false);
                 while (st.hasMoreTokens()) {
                     
                     // ngay tại đoạn này in lên thì theo t á, là tách ra , rồi add label vào
@@ -184,10 +219,10 @@ public class FormChat extends javax.swing.JFrame {
 //                    ưhile / à khoan
 //                    String[]
 // chạy thử xem :V
-                    System.out.println(Color.RED+ st.nextToken()); // à nó chỉ cho console thôi à oko k vậy thôi kệ nó đi còn multithread
+//                    System.out.println(Color.RED+ st.nextToken()); // à nó chỉ cho console thôi à oko k vậy thôi kệ nó đi còn multithread
                     // mã hóa trước :v  khi nào m cần à thôi chủ nhật cũng được tại vì giờ t phải làm môn phân lớp mai thầy kiểm tra chủ nhât nha 
                    //// đ haha ok inhó oke hehe.
-//                    txtArea.append(Color.RED+ st.nextToken() + "\r\n");
+                    txtArea.append(st.nextToken() + "\r\n");
                 }
                 // gán chuỗi bằng rỗng để không in ra thêm lần nữa
                 serverResponse = "";
@@ -259,53 +294,21 @@ public class FormChat extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
+       
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormChat().setVisible(true);
+                try {
+                    new FormChat().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
-        try {
-            socket = new Socket("localhost", 5000);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            
-            System.out.println("Tạo khóa và mã hóa khóa gửi cho sv");
-            AESClient.initKey(); //tạo khóa
-            String keyString = EncryptKeyAES.EncryptKeyWithRSA(); // mã hóa khóa
-            try {
-                out.write(keyString);
-                out.newLine();
-                out.flush();
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
-            System.out.println("gửi key đã mã hóa thành công.");
-            
-//            stdIn = new BufferedReader(new InputStreamReader(System.in));
-
-            // Client nhận dữ liệu từ keyboard và gửi vào stream -> server
-//            while (true) {
-//                
-//                
-////                line = stdIn.readLine(); // cái chỗ này nó bắt nhập từ System,
-//                out.write(line);
-//                out.newLine();
-//                out.flush();
-//
-//                if (line.equals("bye")) {
-//                    break;
-//                }
-//                // Client nhận phản hồi từ server
-//                line = in.readLine();
-//                // System.out.println("Client get: " + line);
-//                txtArea.append(line + "\r\n");
-//            }
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        
 
     } //
 

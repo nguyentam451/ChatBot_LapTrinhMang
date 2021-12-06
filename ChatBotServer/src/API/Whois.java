@@ -85,13 +85,20 @@ public class Whois {
                 //System.out.println("Ngày hết hạn: " + expirationDate);
                 //System.out.println("Chủ sở hữu tên miền: " + registrantName);
                 
-                result = "Tên miền: " + domainName + "\t"
-                        + "Quản lý tại nhà đăng ký: " + registrar + "\t"
-                        + "Nameserver: " + nameServer + "\t"
-                        + "Cờ trạng thái: " + status + "\t"
-                        + "Ngày đăng ký: " + creationDate + "\t"
-                        + "Ngày hết hạn: " + expirationDate + "\t"
-                        + "Chủ sở hữu tên miền: " + registrantName + "\t";
+                result = "Tên miền: " + domainName + " tttt "
+                        + "Quản lý tại nhà đăng ký: " + registrar + " tttt "
+                        + "Nameserver: " + nameServer + " tttt "
+                        + "Cờ trạng thái: " + status + " tttt "
+                        + "Ngày đăng ký: " + creationDate + " tttt "
+                        + "Ngày hết hạn: " + expirationDate + " tttt "
+                        + "Chủ sở hữu tên miền: " + registrantName + " tttt";
+                
+                // \t t nghi no ma hoa ra khac
+                // hinh nhu t bi cho nay roi t de \t cho de
+                // thay bang cai khac cung duoc
+                // hmm ko thi m doi \t = tttt
+                // sau do qua client replace cai tttt kia thanh \t lai
+                System.out.println(result);
 
             }
         } catch (Exception e) {

@@ -10,6 +10,8 @@ import API.Simsimi;
 import API.Whois;
 import API.currencyConverter;
 import API.thoiTiet;
+import MaHoa.DecryptKeyAES;
+import MaHoa.ListKey;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -17,6 +19,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,8 +39,23 @@ public class Worker implements Runnable{
                 + "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' \t vd; iplocation;115.76.51.83.";
     }
     
+    private int indexKey;
+    
     public Worker(Socket socket) {
         this.socket = socket;
+    }
+    
+    
+    private void nhanKeyVaLuu() throws Exception{
+        try {
+            String line = in.readLine(); // nhận key
+            // giải mã và lưu trữ vào arraylist, với thứ tự key
+            indexKey = ListKey.addKey(DecryptKeyAES.DecryptKeyWithRSA(line)); // index =0
+            System.out.println("Số thứ tự key " + indexKey);
+            
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
     }
     
     @Override
@@ -47,14 +66,25 @@ public class Worker implements Runnable{
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            nhanKeyVaLuu();
+            
             while (true) {
-                String line = in.readLine();
+                
+                // nhận từ client, giải mã
+                String line = ListKey.decryptWithIndexKey(in.readLine(), indexKey) ;
 
                 if (line.equals("bye")) {
 
                     break;
                 }
+                
+                
+                // Nhận key từ client
+                
+                
+                
                 System.out.println("Server received " + line);
+                String res="";
 
                 // chỗ nãy để xử lý chức năng
                 // nếu chuỗi chứa từ currencyConverter thì sẽ thực hiện chức năng chuyển tiền
@@ -68,7 +98,7 @@ public class Worker implements Runnable{
                         String chuoi1 = st.nextToken();
                         String chuoi2 = st.nextToken();
                         String chuoi3 = st.nextToken();
-                        line = currencyConverter.convertMoney(chuoi1, chuoi2, chuoi3);
+                        res = currencyConverter.convertMoney(chuoi1, chuoi2, chuoi3);
                     }
 
                 } else if (line.contains("thoitiet;")) { // nếu trong chuỗi có chứa chữ thoitiet thì thực hiện chức năng xem thời tiết
@@ -77,7 +107,7 @@ public class Worker implements Runnable{
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
                         String city = st.nextToken();   // token thứ 2 là tên thành phố
-                        line = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
+                        res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
                         System.out.println(line);
                     }
 
@@ -86,7 +116,7 @@ public class Worker implements Runnable{
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
                         String domain = st.nextToken();   // token thứ 2 là tên domain
-                        line = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
+                        res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
                         System.out.println(line);
                     }
 
@@ -95,17 +125,20 @@ public class Worker implements Runnable{
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
                         String ip = st.nextToken();   // token thứ 2 là ip cần tra thông tin
-                        line = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
+                        res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
                         System.out.println(line);
                     }
                 } else if (line.equals("cuphap")) {
-                    line = huongDanCuPhap();
+                    res = huongDanCuPhap();
                 } else {
-                    line = Simsimi.getResponeFromSimsimi(line);
+                    res = Simsimi.getResponeFromSimsimi(line);
                 }
 
                 // đây dòng này
-                out.write(line);
+                
+                // Mã hóa dữ liệu
+                String res2 = ListKey.encryptWithIndexKey(res, indexKey);
+                out.write(res2);
                 out.newLine();
                 out.flush();
 
@@ -117,6 +150,8 @@ public class Worker implements Runnable{
             
         } catch (IOException e) {
             System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
         
     }
