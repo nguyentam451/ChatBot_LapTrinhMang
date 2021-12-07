@@ -30,12 +30,12 @@ public class currencyConverter {
     public static void main(String[] args) {
 
         //  System.out.println(convertMoney("USD", "VND", "1"));
-//        ArrayList<String> arr = new ArrayList<>();
-//        arr = getListCodeCity();
-//        for(int i =0; i < arr.size() ; i++){
-//            System.out.println(arr.get(i));
-//        }
-    System.out.println(convertMoney("USD", "VND", "100"));
+        ArrayList<String> arr = new ArrayList<>();
+        arr = getListCodeCity();
+        for(int i =0; i < arr.size() ; i++){
+            System.out.println(arr.get(i));
+        }
+   // System.out.println(convertMoney("USD", "VND", "100"));
 
     }
 

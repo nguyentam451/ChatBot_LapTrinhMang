@@ -118,11 +118,15 @@ public class thoiTiet {
             Elements info = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4 ");
             Elements info2 = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4  tomorrow");
             
-            line += info2.get(0).text()+ "\t";
+        //    line += info2.get(0).text()+ "zzzz";
             for(int i=0; i <info.size(); i++){
                // System.out.println(info.get(i).text());
                // line += info.get(i).text()+ "\n";
-                line += info.get(i).text() + "\t";
+                line += info.get(i).text() + "@@@@";
+                if(i==0){
+                    line+=info2.get(0).text()+"@@@@";
+                    continue;
+                }
             }
                
 

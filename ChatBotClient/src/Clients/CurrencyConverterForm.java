@@ -127,7 +127,6 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 
     private void comboboxListCity1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxListCity1ActionPerformed
         selected_1 = (String) comboboxListCity1.getSelectedItem();
-
     }//GEN-LAST:event_comboboxListCity1ActionPerformed
 
     private void comboboxListCity2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboboxListCity2ActionPerformed

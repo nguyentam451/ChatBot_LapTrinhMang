@@ -34,9 +34,9 @@ public class Worker implements Runnable{
     private static BufferedWriter out = null;
 
     public static String huongDanCuPhap() {
-        return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \t vd: thoitiet;london \t vd:thoitiet;ho+chi+minh (nếu tên thành phố có 2 chữ cái trở lên thì thêm dấu '+') \t "
-                + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' \t vd: whois;sgu.edu.vn"
-                + "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' \t vd; iplocation;115.76.51.83.";
+        return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london @@@@ vd:thoitiet;ho+chi+minh (nếu tên thành phố có 2 chữ cái trở lên thì thêm dấu '+') @@@@ "
+                + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
+                + "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
     }
     
     private int indexKey;

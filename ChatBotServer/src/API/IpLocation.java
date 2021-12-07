@@ -58,7 +58,7 @@ public class IpLocation {
                         + organization + "; latitude: "
                         + latitude + "; longitude: "
                         + longitude
-                        + "\t";
+                        + "@@@@";
             }
 
         } catch (IOException e) {

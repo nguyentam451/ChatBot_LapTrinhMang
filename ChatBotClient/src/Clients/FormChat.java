@@ -207,9 +207,9 @@ public class FormChat extends javax.swing.JFrame {
             // nếu response có chứa chuỗi "\t" thì sẽ thực hiện tách các tokens thành từng dòng in ra cho đẹp :>
             System.out.println(serverResponse);
             // Hin2h nhu cho nay
-            if (serverResponse.contains("tttt")) {
+            if (serverResponse.contains("@@@@")) {
 //                System.out.println("ok chuaaaaaaaaaaa");
-                StringTokenizer st = new StringTokenizer(serverResponse, "tttt", false);
+                StringTokenizer st = new StringTokenizer(serverResponse, "@@@@", false);
                 while (st.hasMoreTokens()) {
                     
                     // ngay tại đoạn này in lên thì theo t á, là tách ra , rồi add label vào
