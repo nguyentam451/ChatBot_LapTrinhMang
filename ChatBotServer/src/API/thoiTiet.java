@@ -102,7 +102,7 @@ public class thoiTiet {
         String line = "";
         try {
             
-            int woeid = getJsonThoiTiet(city);
+            int woeid = getJsonThoiTiet(city); // chỗ này =0 nè
             String link = "https://www.metaweather.com/" + woeid + "/";
             String url = Jsoup.connect(link)
                     .followRedirects(true)
@@ -132,6 +132,7 @@ public class thoiTiet {
 
         } catch (IOException e) {
             System.err.println(e);
+            return "Lỗi connect voi website thoitiet";
         }
         
         return line;

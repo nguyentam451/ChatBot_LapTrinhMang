@@ -73,6 +73,7 @@ public class Simsimi {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return "Loi";
         }
         return text;
     }

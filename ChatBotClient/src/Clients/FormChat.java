@@ -23,77 +23,29 @@ import java.util.logging.Logger;
 
 public class FormChat extends javax.swing.JFrame {
 
-    private static Socket socket = null;
-    public static BufferedReader in = null;
-    public static BufferedWriter out = null;
+    // vl đây rồi, đây là biến toàn cục, khi mà client 2 chay sẽ khởi tạo mới, đè lên thằng client 1 luôn ew
 //    private static BufferedReader stdIn = null;
-    public static String line;
-    public static String input;
-    public static String serverResponse;
+    private static String line;
+    private static String input;
+    
+    private Client c ;
 
     public FormChat() throws Exception {
-        sendKeyServer();
+        c = new Client();
+        
         initComponents();
         
         this.setLocationRelativeTo(null);
 
     }
     
-    private void sendKeyServer() throws Exception{
-         try {
-            socket = new Socket("localhost", 5000);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            
-            System.out.println("Tạo khóa và mã hóa khóa gửi cho sv");
-            AESClient.initKey(); //tạo khóa
-            String keyString = EncryptKeyAES.EncryptKeyWithRSA(); // mã hóa khóa
-            try {
-                out.write(keyString);
-                out.newLine();
-                out.flush();
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
-            System.out.println("gửi key đã mã hóa thành công.");
-            
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-    }
+    
+    
     
 //
 
     public void connectToServer(String input) {
-        try {
-            socket = new Socket("localhost", 5100);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-//            stdIn = new BufferedReader(new InputStreamReader(System.in));
-            while (true) {
-                // Client nhận dữ liệu từ keyboard và gửi vào stream -> server
-                //System.out.print("Client input tax code: ");
-                System.out.print("Client enter a word: ");
-                // line = stdIn.readLine();
-                line = input;
-                out.write(line);
-                out.newLine();
-                out.flush();
-                if (line.equals("bye")) {
-                    break;
-                }
-                // Client nhận phản hồi từ server
-                line = in.readLine();
-                System.out.println("Client get: " + line);
-            }
-            System.out.println("Client closed connection");
-            in.close();
-            out.close();
-//            stdIn.close();
-            socket.close();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        
     }
 
     /**
@@ -181,72 +133,36 @@ public class FormChat extends javax.swing.JFrame {
         try {
             input = txtNhap.getText();
             txtArea.append("Bạn: " + input + "\r\n");
+            System.out.println("aaaa" + input);
 
             if (input.equals("chuyentien")) {
-                CurrencyConverterForm currency = new CurrencyConverterForm();
+                CurrencyConverterForm currency = new CurrencyConverterForm(c);
                 currency.setVisible(true);
 
                 // nếu bye thì đóng connection
             } else if (input.equals("bye")) {
                 txtArea.append("bái bai" + "\r\n");
-                out.write(input + "\r\n");
-                out.flush();
-                dongKetNoi();
+                c.sendClient(input);
+                c.dongKetNoi();
             }
             
             
             // Mã hóa gửi cho sv:
             input = AESClient.encrypt(input);
-            out.write(input + "\r\n");
-            out.flush();
+            c.sendClient(input);
 
             // server response:
             // Giải mã thông điệp từ sv
             
-            serverResponse = AESClient.decrypt(in.readLine()) + "\r\n";
-            // nếu response có chứa chuỗi "\t" thì sẽ thực hiện tách các tokens thành từng dòng in ra cho đẹp :>
-            System.out.println(serverResponse);
-            // Hin2h nhu cho nay
-            if (serverResponse.contains("@@@@")) {
-//                System.out.println("ok chuaaaaaaaaaaa");
-                StringTokenizer st = new StringTokenizer(serverResponse, "@@@@", false);
-                while (st.hasMoreTokens()) {
-                    
-                    // ngay tại đoạn này in lên thì theo t á, là tách ra , rồi add label vào
-                    // có vẻ hơi cực cho m á, để t làm thử
-//                    String tmp  = st.nextToken();
-//                    StringTokenizer s = new StringTokenizer(tmp, ";", false);
-//                    ưhile / à khoan
-//                    String[]
-// chạy thử xem :V
-//                    System.out.println(Color.RED+ st.nextToken()); // à nó chỉ cho console thôi à oko k vậy thôi kệ nó đi còn multithread
-                    // mã hóa trước :v  khi nào m cần à thôi chủ nhật cũng được tại vì giờ t phải làm môn phân lớp mai thầy kiểm tra chủ nhât nha 
-                   //// đ haha ok inhó oke hehe.
-                    txtArea.append(st.nextToken() + "\r\n");
-                }
-                // gán chuỗi bằng rỗng để không in ra thêm lần nữa
-                serverResponse = "";
-            }
-            txtArea.append(serverResponse);
+           
 
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.out.println(ex);
         }
 
     }//GEN-LAST:event_btnGuiActionPerformed
 
-    private void dongKetNoi() {
-        System.out.println("Client closed connection");
-        try {
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
-
-//            stdIn.close();
-    }
+   
     private void btnGuiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuiKeyPressed
 //        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 //

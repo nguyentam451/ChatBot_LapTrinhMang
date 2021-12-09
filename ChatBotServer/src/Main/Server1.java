@@ -47,7 +47,7 @@ public class Server1 {
                 Socket socket = server.accept();
                 executor.execute(new Worker(socket));
             }
-// khoan
+
         } catch (IOException ex) {
             System.out.println(ex);
         }

@@ -29,11 +29,11 @@ import java.util.logging.Logger;
 public class Worker implements Runnable{
 
         
-    private static Socket socket = null;
-    private static BufferedReader in = null;
-    private static BufferedWriter out = null;
+    private Socket socket ; // hình như cho nay null nen khong su dung duoc multithread *********** cho nay quan trong
+    private BufferedReader in ; // hai vl, lan dau thay 
+    private BufferedWriter out ;
 
-    public static String huongDanCuPhap() {
+    public static String huongDanCuPhap() { 
         return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london @@@@ vd:thoitiet;ho+chi+minh (nếu tên thành phố có 2 chữ cái trở lên thì thêm dấu '+') @@@@ "
                 + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
                 + "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
@@ -79,7 +79,7 @@ public class Worker implements Runnable{
                 }
                 
                 
-                // Nhận key từ client
+                
                 
                 
                 
@@ -134,10 +134,12 @@ public class Worker implements Runnable{
                     res = Simsimi.getResponeFromSimsimi(line);
                 }
 
-                // đây dòng này
+                
+                System.out.println(res + "Key " + indexKey + " " + socket.toString());
                 
                 // Mã hóa dữ liệu
                 String res2 = ListKey.encryptWithIndexKey(res, indexKey);
+                System.out.println(res2);
                 out.write(res2);
                 out.newLine();
                 out.flush();

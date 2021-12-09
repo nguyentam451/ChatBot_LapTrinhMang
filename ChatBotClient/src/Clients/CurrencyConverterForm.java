@@ -7,7 +7,7 @@ package Clients;
 
 //import API.currencyConverter;
 //import static API.currencyConverter.getListCodeCity;
-import static Clients.FormChat.input;
+
 import static Clients.FormChat.txtArea;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,14 +29,18 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
     public static String selected_2;
     public static String luongTien;
     public static String result;
+    private  BufferedWriter out = null;
+    private  BufferedReader in = null;
 
 //    private static ServerSocket server = null;
 //    private static Socket socket = null;
 //    private static BufferedReader in = null;
 //    private static BufferedWriter out = null;
 
-    public CurrencyConverterForm() {
+    public CurrencyConverterForm(Client c) {
         initComponents();
+        out = c.getOut();
+        in = c.getIn();
         this.setLocationRelativeTo(null);
         LoadData();
     }
@@ -143,11 +147,11 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 //      
         try {
 
-            FormChat.out.write(result + "\r\n");
-            FormChat.out.flush();
+            out.write(result + "\r\n");
+            out.flush();
 
             // server response:
-            FormChat.txtArea.append(FormChat.in.readLine() + "\r\n");
+            FormChat.txtArea.append(in.readLine() + "\r\n");
 
         } catch (IOException ex) {
             System.out.println(ex);
@@ -165,7 +169,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[], Client c) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -192,7 +196,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CurrencyConverterForm().setVisible(true);
+                new CurrencyConverterForm(c).setVisible(true);
             }
         });
     }

@@ -85,6 +85,7 @@ public class Whois {
                 //System.out.println("Ngày hết hạn: " + expirationDate);
                 //System.out.println("Chủ sở hữu tên miền: " + registrantName);
                 
+                // chạy ra ko ? ra bình thường , để t chạy thử
                 result = "Tên miền: " + domainName + "@@@@"
                         + "Quản lý tại nhà đăng ký: " + registrar + "@@@@"
                         + "Nameserver: " + nameServer + "@@@@"
