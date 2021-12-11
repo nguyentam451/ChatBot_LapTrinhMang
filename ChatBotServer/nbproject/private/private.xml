@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/ChatBot_LapTrinhMang/ChatBotServer/src/API/thoiTiet.java</file>
-            <file>file:/D:/Github/ChatBot_LapTrinhMang/ChatBotServer/src/Main/Worker.java</file>
-            <file>file:/D:/Github/ChatBot_LapTrinhMang/ChatBotServer/src/Main/Server1.java</file>
-            <file>file:/D:/Github/ChatBot_LapTrinhMang/ChatBotServer/src/API/IpLocation.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/API/currencyConverter.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/API/Whois.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/Main/Server1.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/API/Port.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/API/thoiTiet.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/Main/ChatBotServer.java</file>
+            <file>file:/D:/Nam4/Git/ChatBot_LapTrinhMang/ChatBotServer/src/Main/Worker.java</file>
         </group>
     </open-files>
 </project-private>

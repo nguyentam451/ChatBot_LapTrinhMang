@@ -9,6 +9,7 @@ package Clients;
 //import static API.currencyConverter.getListCodeCity;
 
 import static Clients.FormChat.txtArea;
+import MaHoa.AESClient;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,6 +32,8 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
     public static String result;
     private  BufferedWriter out = null;
     private  BufferedReader in = null;
+    
+  //  private Client c ;
 
 //    private static ServerSocket server = null;
 //    private static Socket socket = null;
@@ -67,7 +70,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 
         jPanel1.setLayout(null);
 
-        comboboxListCity2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxListCity2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "VND" }));
         comboboxListCity2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboboxListCity2ActionPerformed(evt);
@@ -76,7 +79,8 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
         jPanel1.add(comboboxListCity2);
         comboboxListCity2.setBounds(110, 170, 510, 50);
 
-        comboboxListCity1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboboxListCity1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "USD" }));
+        comboboxListCity1.setToolTipText("");
         comboboxListCity1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboboxListCity1ActionPerformed(evt);
@@ -144,18 +148,22 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
     private void btnChuyenDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDoiActionPerformed
         luongTien = txtLuongTien.getText();
         result = "currencyConverter" +" "+ sendDataToServer(selected_1, selected_2, luongTien);
+        result = AESClient.encrypt(result);
+      //  txtArea.append(result);
+        //Client c = new Client();
+        FormChat.c.sendClient(result);
 //      
-        try {
-
-            out.write(result + "\r\n");
-            out.flush();
-
-            // server response:
-            FormChat.txtArea.append(in.readLine() + "\r\n");
-
-        } catch (IOException ex) {
-            System.out.println(ex);
-        }
+//        try {
+//
+//            out.write(result + "\r\n");
+//            out.flush();
+//
+//            // server response:
+//            FormChat.txtArea.append(in.readLine() + "\r\n");
+//
+//        } catch (IOException ex) {
+//            System.out.println(ex);
+//        }
 //          System.out.println(result);
 //          System.out.println(result.contains("chuyendoitien"));
     }//GEN-LAST:event_btnChuyenDoiActionPerformed
@@ -205,23 +213,14 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 
       //  listCity1 = currencyConverter.getListCodeCity();
       //  listCity2 = currencyConverter.getListCodeCity();
-
-        comboboxListCity1.removeAllItems();
-        comboboxListCity2.removeAllItems();
-
-        for (String item : listCity1) {
-            comboboxListCity1.addItem(item);
-        }
-
-        for (String item : listCity2) {
-            comboboxListCity2.addItem(item);
-        }
+      
+      
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChuyenDoi;
-    private javax.swing.JComboBox<String> comboboxListCity1;
-    private javax.swing.JComboBox<String> comboboxListCity2;
+    public static javax.swing.JComboBox<String> comboboxListCity1;
+    public static javax.swing.JComboBox<String> comboboxListCity2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

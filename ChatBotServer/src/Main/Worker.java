@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -148,7 +149,13 @@ public class Worker implements Runnable{
                         }
                         
                     }
-                } else if (line.equals("cuphap")) {
+                }
+                else if(line.equals("chuyentien")){
+                    ArrayList<String> arr = new ArrayList<>();
+                    arr = currencyConverter.getListCodeCity();
+                    res = currencyConverter.chuyenListCodeCitySangChuoi(arr);
+                    
+                }else if (line.equals("cuphap")) {
                     res = huongDanCuPhap();
                 } else {
                     res = Simsimi.getResponeFromSimsimi(line);
