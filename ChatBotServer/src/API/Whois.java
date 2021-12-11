@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package API;
 
 import java.io.BufferedReader;
@@ -59,9 +54,20 @@ public class Whois {
                 // bóc tách chuỗi json
                 JSONObject obj = new JSONObject(response.toString());
                 // messages là 1 mảng
+                
+                // Kiểm tra json code để biết domain có được đăng ký hay không
+                String code = obj.getString("code");
+                
+                if (code.equals("0")){
+                    String message = obj.getString("message");
+                    if (message.equals("Đã được đăng ký")){
+                        
+                
                 String domainName = obj.getString("domainName");
                 String registrar = obj.getString("registrar");
-
+                
+                
+                
                 String nameServer = "";
                 JSONArray nameServerArr = obj.getJSONArray("nameServer");
                 for (int i = 0; i < nameServerArr.length(); i++) {
@@ -100,7 +106,13 @@ public class Whois {
                 // hmm ko thi m doi \t = tttt
                 // sau do qua client replace cai tttt kia thanh \t lai
                 System.out.println(result);
-
+                    } else {
+                        result = message;
+                    }
+                } else {
+                    result = "Domain chưa được đăng ký";
+                }
+            
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -27,6 +27,8 @@ import org.jsoup.select.Elements;
  */
 public class thoiTiet {
 
+    static String title = "";
+    
     public static void listDanhSachThanhPho() {
         try {
             String url = Jsoup.connect("https://www.metaweather.com/")
@@ -56,7 +58,7 @@ public class thoiTiet {
             //https://www.metaweather.com/api/location/search/?query=<CITY>
             //https://www.metaweather.com/api/location/44418/
             
-            city = URLEncoder.encode(city, StandardCharsets.UTF_8.toString()); // ok chạy thử đi
+            city = URLEncoder.encode(city, StandardCharsets.UTF_8.toString());
 
             URL url = new URL("https://www.metaweather.com/api/location/search/?query=" + city);
 
@@ -88,7 +90,7 @@ public class thoiTiet {
                 for (int i = 0; i < jsonarray.length(); i++) {
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
                     woeid = jsonobject.getInt("woeid");
-
+                    title = jsonobject.getString("title");
                 }
 
             }
@@ -112,33 +114,44 @@ public class thoiTiet {
 
             Document doc = Jsoup.connect(url).get();
 
+            System.out.println("woeid 2 = " + woeid);
           //  String cityName = doc.getElementsByTag("h1").text();
           //  String weather = doc.getElementsByClass("row weather weather-lrg").text();
         
-            Elements info = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4 ");
-            Elements info2 = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4  tomorrow");
-            
-        //    line += info2.get(0).text()+ "zzzz";
-            for(int i=0; i <info.size(); i++){
-               // System.out.println(info.get(i).text());
-               // line += info.get(i).text()+ "\n";
-                line += info.get(i).text() + "@@@@";
-                if(i==0){
-                    line+=info2.get(0).text()+"@@@@";
-                    continue;
+            Elements check = doc.getElementsByClass("col-lg-2");
+            if (!check.isEmpty() || woeid != 0) {
+          
+                Elements info = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4 ");
+                Elements info2 = doc.getElementsByClass("col-lg-2 col-md-2 col-sm-2 col-xs-4  tomorrow");
+
+            //    line += info2.get(0).text()+ "zzzz";
+                for(int i=0; i <info.size(); i++){
+                   // System.out.println(info.get(i).text());
+                   // line += info.get(i).text()+ "\n";
+                    line += info.get(i).text() + "@@@@";
+                    if(i==0){
+                        line+=info2.get(0).text()+"@@@@";
+                        continue;
+                    }
                 }
+            }  else {
+                return "Không tìm thấy thành phố hoặc sai cú pháp. "
+                    + "\n Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ ";
             }
-               
 
         } catch (IOException e) {
             System.err.println(e);
-            return "Lỗi connect voi website thoitiet";
+            
+           // return "Không tìm thấy thành phố hoặc sai cú pháp. "
+           //         + "\n Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ ";
+            // 2 th: thành phố ko tồn tại và sai cú pháp tên tp
         }
         
+        //return "Thời tiết của thành phố: " + title + "\n" + line;
         return line;
     }
 
     public static void main(String[] args) {
-        System.out.println(getWeather("ho+chi+minh"));
+        //System.out.println(getWeather("ho+chi+minh"));
     }
 }

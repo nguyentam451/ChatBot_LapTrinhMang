@@ -35,34 +35,40 @@ public class IpLocation {
                     .toExternalForm();
 
             Document doc = Jsoup.connect(url).get();
+            Elements check = doc.getElementsByClass("table_dark_green");
+            if (!check.isEmpty()) {
+                Elements info = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td");
 
-            Elements info = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td");
+                //   String domainName = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td").get(0).text();
+                for (int i = 0; i < info.size(); i++) {
+                    String domainName = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(0).text();
+                    String country = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(1).text();
+                    String region = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(2).text();
+                    String city = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(3).text();
+                    String ISP = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(4).text();
+                    String organization = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(5).text();
+                    String latitude = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(6).text();
+                    String longitude = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(7).text();
 
-            //   String domainName = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td").get(0).text();
-            for (int i = 0; i < info.size(); i++) {
-                String domainName = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(0).text();
-                String country = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(1).text();
-                String region = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(2).text();
-                String city = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(3).text();
-                String ISP = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(4).text();
-                String organization = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(5).text();
-                String latitude = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(6).text();
-                String longitude = doc.getElementsByClass("table_dark_green").get(i).getElementsByTag("td").get(7).text();
-
-                result += "domain name: " + domainName
-                        + "; country: "
-                        + country + "; region: "
-                        + region + "; city: "
-                        + city + "; ISP: "
-                        + ISP + "; organization: "
-                        + organization + "; latitude: "
-                        + latitude + "; longitude: "
-                        + longitude
-                        + "@@@@";
+                    result += "domain name: " + domainName
+                            + "; country: "
+                            + country + "; region: "
+                            + region + "; city: "
+                            + city + "; ISP: "
+                            + ISP + "; organization: "
+                            + organization + "; latitude: "
+                            + latitude + "; longitude: "
+                            + longitude
+                            + "@@@@";
+                }
+            } else {
+                return "Địa chỉ ip không tồn tại!!!"
+                        + "\n Vui lòng nhập theo cú pháp \n Cú pháp xem thông tin IP: 'iplocation;' 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83";
             }
 
         } catch (IOException e) {
-            System.out.println(e);
+            //System.out.println(e);
+           // result = "Vui lòng nhập theo cú pháp \n Cú pháp xem thông tin IP: 'iplocation;' 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83";
         }
 
         return result;

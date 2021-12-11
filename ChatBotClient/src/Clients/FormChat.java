@@ -38,11 +38,6 @@ public class FormChat extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
     }
-    
-    
-    
-    
-//
 
     public void connectToServer(String input) {
         

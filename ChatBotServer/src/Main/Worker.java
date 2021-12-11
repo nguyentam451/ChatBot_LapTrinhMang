@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Main;
 
 import API.IpLocation;
@@ -34,9 +29,9 @@ public class Worker implements Runnable{
     private BufferedWriter out ;
 
     public static String huongDanCuPhap() { 
-        return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london @@@@ vd:thoitiet;ho+chi+minh (nếu tên thành phố có 2 chữ cái trở lên thì thêm dấu '+') @@@@ "
+        return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ "
                 + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
-                + "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
+                + "\n Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
     }
     
     private int indexKey;
@@ -49,6 +44,12 @@ public class Worker implements Runnable{
     private void nhanKeyVaLuu() throws Exception{
         try {
             String line = in.readLine(); // nhận key
+            
+//            // kiểm tra lỗi dấu cách sau ';'
+//                if(line.endsWith(";")) {
+//                    line = line + " ";
+//                }
+            
             // giải mã và lưu trữ vào arraylist, với thứ tự key
             indexKey = ListKey.addKey(DecryptKeyAES.DecryptKeyWithRSA(line)); // index =0
             System.out.println("Số thứ tự key " + indexKey);
@@ -72,17 +73,18 @@ public class Worker implements Runnable{
                 
                 // nhận từ client, giải mã
                 String line = ListKey.decryptWithIndexKey(in.readLine(), indexKey) ;
-
+                
                 if (line.equals("bye")) {
 
                     break;
                 }
                 
-                
-                
-                
-                
-                
+                // kiểm tra lỗi dấu cách sau ';'
+                if(line.endsWith(";")) {
+                    line = line + " ";
+                    System.out.println("line 2: .");
+                }
+//                
                 System.out.println("Server received " + line);
                 String res="";
 
@@ -106,27 +108,45 @@ public class Worker implements Runnable{
 
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String city = st.nextToken();   // token thứ 2 là tên thành phố
-                        res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
-                        System.out.println(line);
+                        String city = st.nextToken().trim();   // token thứ 2 là tên thành phố
+                        
+                        if (checkWhois(city).equals("1")) {                        
+                            res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
+                            System.out.println(line);
+                        } else {
+                            res = checkThoiTiet(city);
+                        }
                     }
 
                 } else if (line.contains("whois;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String domain = st.nextToken();   // token thứ 2 là tên domain
-                        res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
-                        System.out.println(line);
+                        String domain = st.nextToken().trim();   // token thứ 2 là tên domain
+                                                
+                        if (checkWhois(domain).equals("1")) {
+                            res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
+                            System.out.println(line);
+                        } else {
+                            res = checkWhois(domain);
+                        }
                     }
 
                 } else if (line.contains("iplocation;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     while (st.hasMoreTokens()) {
                         String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String ip = st.nextToken();   // token thứ 2 là ip cần tra thông tin
-                        res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
-                        System.out.println(line);
+                        String ip = st.nextToken().trim();   // token thứ 2 là ip cần tra thông tin
+                        
+                        if (checkIPLocation(ip).equals("1")){
+                            System.out.println(ip);
+
+                            res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
+                            System.out.println(line);
+                        } else {
+                            res = checkIPLocation(ip);
+                        }
+                        
                     }
                 } else if (line.equals("cuphap")) {
                     res = huongDanCuPhap();
@@ -143,7 +163,7 @@ public class Worker implements Runnable{
                 out.write(res2);
                 out.newLine();
                 out.flush();
-
+            
             }
             System.out.println("Server closed connection");
             in.close();
@@ -151,11 +171,36 @@ public class Worker implements Runnable{
             socket.close();
             
         } catch (IOException e) {
-            System.out.println(e);
-        } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println("Lỗi 1: "+ e);
+        } 
+        catch (Exception ex) {
+            System.out.println("Lỗi 2: " + ex);
         }
         
     }
     
+    private String checkWhois(String domain){
+        
+        if (domain.equals("")) {
+            return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
+        } else {
+            return "1";
+        }
+    }
+    
+    private String checkThoiTiet(String city){
+        if (city.equals("")) {
+            return "Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \n vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ')";
+        } else {
+            return "1";
+        }
+    }
+    
+    private String checkIPLocation(String ip) {
+        if (ip.equals("")) {
+            return "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
+        } else {
+            return "1";
+        }
+    }
 }
