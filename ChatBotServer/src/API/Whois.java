@@ -107,10 +107,10 @@ public class Whois {
                 // sau do qua client replace cai tttt kia thanh \t lai
                 System.out.println(result);
                     } else {
-                        result = message;
+                        return message;
                     }
                 } else {
-                    result = "Domain chưa được đăng ký";
+                    return "Domain chưa được đăng ký";
                 }
             
             }
