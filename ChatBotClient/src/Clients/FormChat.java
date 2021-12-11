@@ -28,7 +28,7 @@ public class FormChat extends javax.swing.JFrame {
     private static String line;
     private static String input;
     
-    private Client c ;
+    protected static Client c ;
 
     public FormChat() throws Exception {
         c = new Client();

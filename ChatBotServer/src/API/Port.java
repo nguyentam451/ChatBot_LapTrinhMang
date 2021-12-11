@@ -25,7 +25,7 @@ public class Port {
         while (y<=x) {
             System.out.println("Hãy nhập lại!!!");
             System.out.print("đến port: ");
-            y = sc.nextInt();
+            y = sc.nextInt();   
         }
         System.out.println("Các port đang mở: ");
         for(int i=x; i <=y; i++)
