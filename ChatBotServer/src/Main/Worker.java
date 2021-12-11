@@ -188,7 +188,7 @@ public class Worker implements Runnable{
     
     private String checkWhois(String domain){
         
-        if (domain.equals("")) {
+        if (domain.equals("") || domain.endsWith(";")) {
             return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
         } else {
             return "1";
