@@ -93,7 +93,7 @@ public class Client {
             String keyString = EncryptKeyAES.EncryptKeyWithRSA(); // mã hóa khóa
             try {
                 out.write(keyString);
-                out.newLine();
+                    out.newLine();
                 out.flush();
             } catch (IOException ex) {
                 System.out.println(ex);
