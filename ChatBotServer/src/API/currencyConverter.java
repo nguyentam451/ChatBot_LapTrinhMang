@@ -32,9 +32,10 @@ public class currencyConverter {
         //  System.out.println(convertMoney("USD", "VND", "1"));
         ArrayList<String> arr = new ArrayList<>();
         arr = getListCodeCity();
-        for(int i =0; i < arr.size() ; i++){
-            System.out.println(arr.get(i));
-        }
+    //    for(int i =0; i < arr.size() ; i++){
+    //        System.out.println(arr.get(i));
+    //    }
+        System.out.println(chuyenListCodeCitySangChuoi(arr));
    // System.out.println(convertMoney("USD", "VND", "100"));
 
     }
@@ -120,5 +121,10 @@ public class currencyConverter {
             e.printStackTrace();
         }
         return listCodeCity;
+    }
+    public static String chuyenListCodeCitySangChuoi(ArrayList arr){
+       // String chuoi = arr.toString();
+       String chuoi = String.join(", ", arr);
+        return chuoi;
     }
 }
