@@ -104,49 +104,53 @@ public class Worker implements Runnable {
 
                 } else if (line.contains("thoitiet;")) { // nếu trong chuỗi có chứa chữ thoitiet thì thực hiện chức năng xem thời tiết
                     StringTokenizer st = new StringTokenizer(line, ";");
-
+                    int i = 0;
+                    String syntax, city = null;
                     while (st.hasMoreTokens()) {
-                        String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String city = st.nextToken().trim();   // token thứ 2 là tên thành phố
-
-                        if (checkWhois(city).equals("1")) {
-                            res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
-                            System.out.println(line);
-                        } else {
-                            res = checkThoiTiet(city);
-                        }
+                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                        city = st.nextToken().trim();   // token thứ 2 là tên thành phố
+                        break;
+                    }
+                    if (checkWhois(city).equals("1")) {
+                        res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
+                        System.out.println(line);
+                    } else {
+                        res = checkThoiTiet(city);
                     }
 
                 } else if (line.contains("whois;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
+                    String syntax, domain = null;
                     while (st.hasMoreTokens()) {
-                        String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String domain = st.nextToken().trim();   // token thứ 2 là tên domain
+                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                        domain = st.nextToken().trim();   // token thứ 2 là tên domain
+                        break;
 
-                        if (checkWhois(domain).equals("1")) {
-                            res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
-                            System.out.println(line);
-                        } else {
-                            res = checkWhois(domain);
-                        }
+                    }
+                    if (checkWhois(domain).equals("1")) {
+                        res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
+                        System.out.println(line);
+                    } else {
+                        res = checkWhois(domain);
                     }
 
                 } else if (line.contains("iplocation;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
+                    String syntax, ip = null;
                     while (st.hasMoreTokens()) {
-                        String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String ip = st.nextToken().trim();   // token thứ 2 là ip cần tra thông tin
-
-                        if (checkIPLocation(ip).equals("1")) {
-                            System.out.println(ip);
-
-                            res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
-                            System.out.println(line);
-                        } else {
-                            res = checkIPLocation(ip);
-                        }
-
+                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                        ip = st.nextToken().trim();   // token thứ 2 là ip cần tra thông tin
+                        break;
                     }
+                    if (checkIPLocation(ip).equals("1")) {
+                        System.out.println(ip);
+
+                        res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
+                        System.out.println(line);
+                    } else {
+                        res = checkIPLocation(ip);
+                    }
+
                 } else if (line.equals("chuyentien")) {
                     ArrayList<String> arr = new ArrayList<>();
                     arr = currencyConverter.getListCodeCity();
@@ -155,19 +159,30 @@ public class Worker implements Runnable {
                 } else if (line.contains("quetport")) {
                     // phân cách bởi dấu ';'
                     StringTokenizer st = new StringTokenizer(line, ";");
+                    String syntax, port = null, x = null, y = null;
+                    if (st.countTokens() != 4) {
+                        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                        res = "Sai cú pháp";
+                    } else {
+                        while (st.hasMoreTokens()) {
+                            System.out.println("hhhhhhhhhhhhhhhhhhhh" + st.countTokens());
 
-                    while (st.hasMoreTokens()) {
-                        String syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        String port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
-                        String x = st.nextToken().trim();   // quét từ port x
-                        String y = st.nextToken().trim();   // đến port y
+                            syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                            port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
+                            x = st.nextToken().trim();   // quét từ port x
+                            // if(st.countTokens()==2){
+                            //     break;
+                            // }
+                            y = st.nextToken().trim();   // đến port y
+
+                            break;
+                        }
                         // vì x, y là kiểu int nên ép về kiểu int
                         if (kiemTraSo(x) && kiemTraSo(y)) {
                             int xTemp = Integer.parseInt(x);
                             int yTemp = Integer.parseInt(y);
                             res = PortScanner.quetport(port, xTemp, yTemp);
-                        }
-                        else {
+                        } else {
                             res = "Sai cú pháp";
                         }
                     }
@@ -200,9 +215,9 @@ public class Worker implements Runnable {
         }
 
     }
-    
-    private String checkWhois(String domain){
-        
+
+    private String checkWhois(String domain) {
+
         if (domain.equals("") || domain.endsWith(";")) {
 
             return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
