@@ -5,7 +5,6 @@
  */
 package Clients;
 
-
 import MaHoa.AESClient;
 import MaHoa.EncryptKeyAES;
 import java.awt.event.KeyEvent;
@@ -27,20 +26,20 @@ public class FormChat extends javax.swing.JFrame {
 //    private static BufferedReader stdIn = null;
     private static String line;
     private static String input;
-    
-    protected static Client c ;
+
+    protected static Client c;
 
     public FormChat() throws Exception {
         c = new Client();
-        
+
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
 
     }
 
     public void connectToServer(String input) {
-        
+
     }
 
     /**
@@ -137,27 +136,23 @@ public class FormChat extends javax.swing.JFrame {
                 // nếu bye thì đóng connection
             } else if (input.equals("bye")) {
                 txtArea.append("bái bai" + "\r\n");
-                c.sendClient(input);
+                //     c.sendClient(input);
                 c.dongKetNoi();
             }
-            
-            
+
             // Mã hóa gửi cho sv:
             input = AESClient.encrypt(input);
             c.sendClient(input);
 
             // server response:
             // Giải mã thông điệp từ sv
-            
-           
-
         } catch (Exception ex) {
             System.out.println(ex);
         }
 
     }//GEN-LAST:event_btnGuiActionPerformed
 
-   
+
     private void btnGuiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuiKeyPressed
 //        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 //
@@ -205,9 +200,7 @@ public class FormChat extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
-       
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -218,8 +211,6 @@ public class FormChat extends javax.swing.JFrame {
                 }
             }
         });
-
-        
 
     } //
 

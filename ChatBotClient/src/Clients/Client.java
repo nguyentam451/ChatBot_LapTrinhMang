@@ -132,7 +132,8 @@ public class Client {
                 CurrencyConverterForm.comboboxListCity1.removeAllItems();
                 CurrencyConverterForm.comboboxListCity2.removeAllItems();
                 
-                //Collections.sort(myList, (o1, o2) -> o2.compareTo(o1));
+                
+                Collections.sort(myList);
                 //System.out.println("mýlisstttttttt" + myList);
                 
                 for (String item : myList) {
