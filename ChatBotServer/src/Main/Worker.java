@@ -109,7 +109,7 @@ public class Worker implements Runnable {
                             city = st.nextToken().trim();   // token thứ 2 là tên thành phố
                             break;
                         }
-                        
+                        // gọi api
                         res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
                         System.out.println(line);
 
@@ -127,7 +127,7 @@ public class Worker implements Runnable {
                             break;
 
                         }
-
+                        // gọi api 
                         res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
                         System.out.println(line);
 
@@ -165,11 +165,13 @@ public class Worker implements Runnable {
                             ip = st.nextToken();   // token thứ 2 là ip cần tra thông tin
                             break;
                         }
+                        //gọi api
                         res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
                         System.out.println(line);
 
                     }
 
+                    // gửi list code city lên combobox
                 } else if (line.equals("chuyentien")) {
                     ArrayList<String> arr = new ArrayList<>();
                     arr = currencyConverter.getListCodeCity();
