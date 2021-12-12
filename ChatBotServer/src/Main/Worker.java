@@ -32,7 +32,8 @@ public class Worker implements Runnable {
     public static String huongDanCuPhap() {
         return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ "
                 + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
-                + "\n Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
+                + "@@@@ Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd: iplocation;115.76.51.83."
+                + "@@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666";
     }
 
     private int indexKey;
@@ -169,9 +170,6 @@ public class Worker implements Runnable {
                         else {
                             res = "Sai cú pháp";
                         }
-
-                       
-
                     }
 
                 } else if (line.equals("cuphap")) {
