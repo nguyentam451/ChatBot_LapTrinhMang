@@ -138,19 +138,19 @@ public class Worker implements Runnable {
                      int ranNum = rand.nextInt(5)+1;
                    //  System.out.println("aaaaaaaaaaaaaaaaaa" + ranNum);
                      if(ranNum == 1){
-                         res = "Bạn hãy ấn vào nút hướng dẫn ở góc phải màn hình để xem cú pháp";
+                         res = "Simsimi: Bạn hãy ấn vào nút hướng dẫn ở góc phải màn hình để xem cú pháp";
                      }
                      else if(ranNum == 2){
-                         res = "Bạn ấn vô nút hướng dẫn ở trên kia đuy";
+                         res = "Simsimi: Bạn ấn vô nút hướng dẫn ở trên kia đuy";
                      }
                      else if (ranNum == 3 ){
-                         res = "Ấn nút hướng dẫn bên phải để xem cú pháp kìa ông";
+                         res = "Simsimi: Ấn nút hướng dẫn bên phải để xem cú pháp kìa ông";
                      }
                      else if (ranNum == 4){
-                         res = "Click chuột vào hướng dẫn để xem cú pháp tra cứu nghen";
+                         res = "Simsimi: Click chuột vào hướng dẫn để xem cú pháp tra cứu nghen";
                      }
                      else if (ranNum == 5){
-                         res = "Nút hướng dẫn ở trên kìaaaaa";
+                         res = "Simsimi: Nút hướng dẫn ở trên kìaaaaa";
                      }
                      
                     
