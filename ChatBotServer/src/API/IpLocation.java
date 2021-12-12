@@ -35,9 +35,14 @@ public class IpLocation {
                     .toExternalForm();
 
             Document doc = Jsoup.connect(url).get();
+         //   System.out.println(doc);
+            
             Elements check = doc.getElementsByClass("table_dark_green");
+            // nếu không rỗng
             if (!check.isEmpty()) {
+                
                 Elements info = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td");
+              //  System.out.println(info);
 
                 //   String domainName = doc.getElementsByClass("table_dark_green").get(0).getElementsByTag("td").get(0).text();
                 for (int i = 0; i < info.size(); i++) {

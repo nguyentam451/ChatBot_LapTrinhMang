@@ -100,11 +100,11 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 
         jLabel2.setText("Từ:");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(110, 50, 17, 13);
+        jLabel2.setBounds(110, 50, 21, 16);
 
         jLabel3.setText("Sang:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(110, 150, 41, 13);
+        jLabel3.setBounds(110, 150, 41, 16);
 
         btnChuyenDoi.setText("Chuyển đổi");
         btnChuyenDoi.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +122,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnThoat);
-        btnThoat.setBounds(610, 480, 59, 21);
+        btnThoat.setBounds(610, 480, 65, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
