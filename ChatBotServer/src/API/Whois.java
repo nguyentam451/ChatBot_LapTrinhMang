@@ -100,17 +100,12 @@ public class Whois {
                         + "Ngày hết hạn: " + expirationDate + "@@@@"
                         + "Chủ sở hữu tên miền: " + registrantName + "@@@@";
                 
-                // \t t nghi no ma hoa ra khac
-                // hinh nhu t bi cho nay roi t de \t cho de
-                // thay bang cai khac cung duoc
-                // hmm ko thi m doi \t = tttt
-                // sau do qua client replace cai tttt kia thanh \t lai
                 System.out.println(result);
                     } else {
-                        result = message;
+                        return message;
                     }
                 } else {
-                    result = "Domain chưa được đăng ký";
+                    return "Domain chưa được đăng ký";
                 }
             
             }

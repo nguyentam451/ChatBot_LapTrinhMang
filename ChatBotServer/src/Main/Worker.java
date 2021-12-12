@@ -202,10 +202,11 @@ public class Worker implements Runnable {
         }
 
     }
+    
+    private String checkWhois(String domain){
+        
+        if (domain.equals("") || domain.endsWith(";")) {
 
-    private String checkWhois(String domain) {
-
-        if (domain.equals("")) {
             return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
         } else {
             return "1";
