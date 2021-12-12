@@ -19,6 +19,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class FormChat extends javax.swing.JFrame {
 
@@ -51,24 +52,35 @@ public class FormChat extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         lb_chatbot = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtArea = new javax.swing.JTextArea();
         txtNhap = new javax.swing.JTextField();
         btnGui = new javax.swing.JButton();
+        lbHuongDan = new javax.swing.JLabel();
+
+        jMenu1.setText("File");
+        jMenuBar2.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar2.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(null);
 
-        lb_chatbot.setFont(new java.awt.Font("Courier New", 0, 18)); // NOI18N
+        lb_chatbot.setFont(new java.awt.Font("Courier New", 1, 24)); // NOI18N
         lb_chatbot.setText("ChatBot");
         lb_chatbot.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lb_chatbot.setInheritsPopupMenu(false);
         jPanel1.add(lb_chatbot);
         lb_chatbot.setBounds(20, 20, 130, 30);
 
+        txtArea.setEditable(false);
         txtArea.setColumns(20);
         txtArea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtArea.setRows(5);
@@ -76,7 +88,7 @@ public class FormChat extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtArea);
 
         jPanel1.add(jScrollPane1);
-        jScrollPane1.setBounds(20, 60, 900, 550);
+        jScrollPane1.setBounds(20, 70, 800, 470);
 
         txtNhap.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtNhap.setToolTipText("");
@@ -86,7 +98,7 @@ public class FormChat extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtNhap);
-        txtNhap.setBounds(20, 620, 800, 40);
+        txtNhap.setBounds(20, 560, 700, 40);
 
         btnGui.setText("Gửi");
         btnGui.addActionListener(new java.awt.event.ActionListener() {
@@ -100,17 +112,28 @@ public class FormChat extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnGui);
-        btnGui.setBounds(830, 620, 90, 40);
+        btnGui.setBounds(730, 560, 90, 40);
+
+        lbHuongDan.setText("Hướng dẫn");
+        lbHuongDan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbHuongDanMouseClicked(evt);
+            }
+        });
+        jPanel1.add(lbHuongDan);
+        lbHuongDan.setBounds(770, 0, 70, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 947, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 842, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
@@ -127,7 +150,7 @@ public class FormChat extends javax.swing.JFrame {
         try {
             input = txtNhap.getText();
             txtArea.append("Bạn: " + input + "\r\n");
-            System.out.println("aaaa" + input);
+            //System.out.println("aaaa" + input);
 
             if (input.equals("chuyentien")) {
                 CurrencyConverterForm currency = new CurrencyConverterForm(c);
@@ -173,6 +196,15 @@ public class FormChat extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuiKeyPressed
 
+    private void lbHuongDanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbHuongDanMouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(FormChat.this, " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \n vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') \n "
+                + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' \n vd: whois;sgu.edu.vn"
+                + "\n Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' \n vd: iplocation;115.76.51.83."
+                + "\n Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' \n vd: quetport;115.76.51.83;5623;6666"
+                + "\n Cú pháp chuyển đổi tiền: chuyentien", "Hướng dẫn", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_lbHuongDanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -216,8 +248,12 @@ public class FormChat extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGui;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbHuongDan;
     private javax.swing.JLabel lb_chatbot;
     public static javax.swing.JTextArea txtArea;
     private javax.swing.JTextField txtNhap;

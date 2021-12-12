@@ -33,7 +33,8 @@ public class Worker implements Runnable {
         return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ "
                 + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
                 + "@@@@ Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd: iplocation;115.76.51.83."
-                + "@@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666";
+                + "@@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666"
+                + "@@@@ Cú pháp chuyển đổi tiền: chuyentien";
     }
 
     private int indexKey;
@@ -46,10 +47,6 @@ public class Worker implements Runnable {
         try {
             String line = in.readLine(); // nhận key
 
-//            // kiểm tra lỗi dấu cách sau ';'
-//                if(line.endsWith(";")) {
-//                    line = line + " ";
-//                }
             // giải mã và lưu trữ vào arraylist, với thứ tự key
             indexKey = ListKey.addKey(DecryptKeyAES.DecryptKeyWithRSA(line)); // index =0
             System.out.println("Số thứ tự key " + indexKey);
@@ -78,12 +75,6 @@ public class Worker implements Runnable {
                     break;
                 }
 
-                // kiểm tra lỗi dấu cách sau ';'
-                if (line.endsWith(";")) {
-                    line = line + " ";
-                    System.out.println("line 2: .");
-                }
-//                
                 System.out.println("Server received " + line);
                 String res = "";
 
@@ -106,49 +97,54 @@ public class Worker implements Runnable {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     int i = 0;
                     String syntax, city = null;
-                    while (st.hasMoreTokens()) {
-                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        city = st.nextToken().trim();   // token thứ 2 là tên thành phố
-                        break;
-                    }
-                    if (checkWhois(city).equals("1")) {
+                    
+                    if (st.countTokens() != 2) {
+                        res = " Sai cú pháp @@@@ Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \n vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ')";
+                    } else {
+
+                        while (st.hasMoreTokens()) {
+                            syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                            city = st.nextToken().trim();   // token thứ 2 là tên thành phố
+                            break;
+                        }
+                       
                         res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
                         System.out.println(line);
-                    } else {
-                        res = checkThoiTiet(city);
+                        
                     }
 
                 } else if (line.contains("whois;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     String syntax, domain = null;
-                    while (st.hasMoreTokens()) {
-                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        domain = st.nextToken().trim();   // token thứ 2 là tên domain
-                        break;
+                    if (st.countTokens() != 2) {
+                        res = " Sai cú pháp @@@@ Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
+                    } else {
+                        while (st.hasMoreTokens()) {
+                            syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                            domain = st.nextToken().trim();   // token thứ 2 là tên domain
+                            break;
 
-                    }
-                    if (checkWhois(domain).equals("1")) {
+                        }
+                        
                         res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
                         System.out.println(line);
-                    } else {
-                        res = checkWhois(domain);
+                        
                     }
 
                 } else if (line.contains("iplocation;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     String syntax, ip = null;
-                    while (st.hasMoreTokens()) {
-                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        ip = st.nextToken().trim();   // token thứ 2 là ip cần tra thông tin
-                        break;
-                    }
-                    if (checkIPLocation(ip).equals("1")) {
-                        System.out.println(ip);
-
+                    if (st.countTokens() != 2) {
+                        res = " Sai cú pháp @@@@ Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83";
+                    } else {
+                        while (st.hasMoreTokens()) {
+                            syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                            ip = st.nextToken();   // token thứ 2 là ip cần tra thông tin
+                            break;
+                        }
                         res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
                         System.out.println(line);
-                    } else {
-                        res = checkIPLocation(ip);
+                    
                     }
 
                 } else if (line.equals("chuyentien")) {
@@ -156,23 +152,18 @@ public class Worker implements Runnable {
                     arr = currencyConverter.getListCodeCity();
                     res = currencyConverter.chuyenListCodeCitySangChuoi(arr);
 
-                } else if (line.contains("quetport")) {
+                } else if (line.contains("quetport;")) {
                     // phân cách bởi dấu ';'
                     StringTokenizer st = new StringTokenizer(line, ";");
                     String syntax, port = null, x = null, y = null;
                     if (st.countTokens() != 4) {
-                        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-                        res = "Sai cú pháp";
+                        res = " Sai cú pháp @@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666";
                     } else {
                         while (st.hasMoreTokens()) {
-                            System.out.println("hhhhhhhhhhhhhhhhhhhh" + st.countTokens());
-
+                           
                             syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
                             port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
                             x = st.nextToken().trim();   // quét từ port x
-                            // if(st.countTokens()==2){
-                            //     break;
-                            // }
                             y = st.nextToken().trim();   // đến port y
 
                             break;
@@ -183,7 +174,7 @@ public class Worker implements Runnable {
                             int yTemp = Integer.parseInt(y);
                             res = PortScanner.quetport(port, xTemp, yTemp);
                         } else {
-                            res = "Sai cú pháp";
+                            res = " Sai cú pháp @@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666\"";
                         }
                     }
 
@@ -214,32 +205,6 @@ public class Worker implements Runnable {
             System.out.println("Lỗi 2: " + ex);
         }
 
-    }
-
-    private String checkWhois(String domain) {
-
-        if (domain.equals("") || domain.endsWith(";")) {
-
-            return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
-        } else {
-            return "1";
-        }
-    }
-
-    private String checkThoiTiet(String city) {
-        if (city.equals("")) {
-            return "Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \n vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ')";
-        } else {
-            return "1";
-        }
-    }
-
-    private String checkIPLocation(String ip) {
-        if (ip.equals("")) {
-            return "Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
-        } else {
-            return "1";
-        }
     }
 
     public static boolean kiemTraSo(String number) {
