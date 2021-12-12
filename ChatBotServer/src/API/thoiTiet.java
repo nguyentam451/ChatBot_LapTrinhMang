@@ -142,9 +142,9 @@ public class thoiTiet {
         } catch (IOException e) {
             System.err.println(e);
             
-
+            return "Không tìm thấy thành phố hoặc sai cú pháp. "
                     + "\n Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ ";
-            // 2 th: thành phố ko tồn tại và sai cú pháp tên tp
+            
         }
         
         return "Thời tiết của thành phố: " + title + "\n" + line;
