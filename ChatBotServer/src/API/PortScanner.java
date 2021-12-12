@@ -64,7 +64,7 @@ public class PortScanner {
     
 
     public static void main(final String... args) throws InterruptedException, ExecutionException {
-       // System.out.println(quetport("127.0.0.1",5000, 60000));
+        System.out.println(quetport("127.0.0.32423423",5000, 60000));
         
     }
 
