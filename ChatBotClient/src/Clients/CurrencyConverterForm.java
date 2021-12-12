@@ -61,6 +61,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnChuyenDoi = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,7 +74,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(comboboxListCity2);
-        comboboxListCity2.setBounds(110, 170, 510, 50);
+        comboboxListCity2.setBounds(110, 250, 510, 50);
 
         comboboxListCity1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "USD" }));
         comboboxListCity1.setToolTipText("");
@@ -83,7 +84,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(comboboxListCity1);
-        comboboxListCity1.setBounds(110, 70, 510, 50);
+        comboboxListCity1.setBounds(110, 140, 510, 50);
 
         txtLuongTien.setText("1");
         txtLuongTien.addActionListener(new java.awt.event.ActionListener() {
@@ -92,19 +93,21 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtLuongTien);
-        txtLuongTien.setBounds(110, 280, 510, 40);
+        txtLuongTien.setBounds(110, 370, 510, 40);
 
         jLabel1.setText("Lượng tiền:");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(110, 250, 80, 30);
+        jLabel1.setBounds(110, 340, 80, 30);
 
         jLabel2.setText("Từ:");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(110, 50, 21, 16);
+
+        jLabel2.setBounds(110, 113, 30, 20);
 
         jLabel3.setText("Sang:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(110, 150, 41, 16);
+        jLabel3.setBounds(110, 223, 41, 20);
+
 
         btnChuyenDoi.setText("Chuyển đổi");
         btnChuyenDoi.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +116,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnChuyenDoi);
-        btnChuyenDoi.setBounds(110, 370, 510, 50);
+        btnChuyenDoi.setBounds(110, 460, 510, 50);
 
         btnThoat.setText("Thoát");
         btnThoat.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +125,14 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnThoat);
-        btnThoat.setBounds(610, 480, 65, 25);
+
+
+        btnThoat.setBounds(619, 561, 70, 30);
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setText("CHUYỂN TIỀN");
+        jPanel1.add(jLabel4);
+        jLabel4.setBounds(280, 30, 190, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,7 +142,9 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,6 +247,7 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtLuongTien;
     // End of variables declaration//GEN-END:variables
