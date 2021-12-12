@@ -32,7 +32,8 @@ public class Worker implements Runnable {
     public static String huongDanCuPhap() {
         return " Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' @@@@ vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ') @@@@ "
                 + "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn"
-                + "\n Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd; iplocation;115.76.51.83.";
+                + "@@@@ Cú pháp xem thông tin IP: 'iplocation;' + 'địa chỉ ip' @@@@ vd: iplocation;115.76.51.83."
+                + "@@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666";
     }
 
     private int indexKey;
@@ -162,29 +163,28 @@ public class Worker implements Runnable {
                     if (st.countTokens() != 4) {
                         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                         res = "Sai cú pháp";
-                    }
-                    else {
-                    while (st.hasMoreTokens()) {
-                        System.out.println("hhhhhhhhhhhhhhhhhhhh" + st.countTokens());
-
-                        syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
-                        port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
-                        x = st.nextToken().trim();   // quét từ port x
-                        // if(st.countTokens()==2){
-                        //     break;
-                        // }
-                        y = st.nextToken().trim();   // đến port y
-
-                        break;
-                    }
-                    // vì x, y là kiểu int nên ép về kiểu int
-                    if (kiemTraSo(x) && kiemTraSo(y)) {
-                        int xTemp = Integer.parseInt(x);
-                        int yTemp = Integer.parseInt(y);
-                        res = PortScanner.quetport(port, xTemp, yTemp);
                     } else {
-                        res = "Sai cú pháp";
-                    }
+                        while (st.hasMoreTokens()) {
+                            System.out.println("hhhhhhhhhhhhhhhhhhhh" + st.countTokens());
+
+                            syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
+                            port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
+                            x = st.nextToken().trim();   // quét từ port x
+                            // if(st.countTokens()==2){
+                            //     break;
+                            // }
+                            y = st.nextToken().trim();   // đến port y
+
+                            break;
+                        }
+                        // vì x, y là kiểu int nên ép về kiểu int
+                        if (kiemTraSo(x) && kiemTraSo(y)) {
+                            int xTemp = Integer.parseInt(x);
+                            int yTemp = Integer.parseInt(y);
+                            res = PortScanner.quetport(port, xTemp, yTemp);
+                        } else {
+                            res = "Sai cú pháp";
+                        }
                     }
 
                 } else if (line.equals("cuphap")) {
@@ -218,7 +218,8 @@ public class Worker implements Runnable {
 
     private String checkWhois(String domain) {
 
-        if (domain.equals("")) {
+        if (domain.equals("") || domain.endsWith(";")) {
+
             return "Cú pháp xem thông tin domain: 'whois; + 'tên miền' @@@@ vd: whois;sgu.edu.vn";
         } else {
             return "1";
