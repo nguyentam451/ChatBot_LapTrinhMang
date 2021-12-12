@@ -127,6 +127,7 @@ public class Client {
                 serverResponse = "";
             } else if (serverResponse.contains("USD, DZD, PAB, GGP, SGD, ETB, JEP, KGS, SOS, VEF, VUV, LAK, BND, ZMK, XAF, LRD, XAG, CHF, HRK, ALL, DJF, ZMW, TZS, VND")) {
                 // System.out.println("ssssssssssssssssssssss"+serverResponse);        
+                
                 ArrayList<String> myList = new ArrayList<String>(Arrays.asList(serverResponse.split(",")));
 
                 CurrencyConverterForm.comboboxListCity1.removeAllItems();
@@ -143,7 +144,7 @@ public class Client {
                 for (String item : myList) {
                     CurrencyConverterForm.comboboxListCity2.addItem(item);
                 }
-                
+                serverResponse = "";
                // System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" +  myList);
             }
 
