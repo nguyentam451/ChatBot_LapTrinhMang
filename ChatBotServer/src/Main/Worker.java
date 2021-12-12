@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,6 +91,7 @@ public class Worker implements Runnable {
                         String chuoi1 = st.nextToken();
                         String chuoi2 = st.nextToken();
                         String chuoi3 = st.nextToken();
+                        // gọi api
                         res = currencyConverter.convertMoney(chuoi1, chuoi2, chuoi3);
                     }
 
@@ -97,7 +99,7 @@ public class Worker implements Runnable {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     int i = 0;
                     String syntax, city = null;
-                    
+
                     if (st.countTokens() != 2) {
                         res = " Sai cú pháp @@@@ Cú pháp xem thời tiết: 'thoitiet;' + 'tên thành phố' \n vd: thoitiet;london hoặc vd:thoitiet;ho chi minh (nếu tên thành phố có 2 từ trở lên thì thêm dấu ' ')";
                     } else {
@@ -107,10 +109,10 @@ public class Worker implements Runnable {
                             city = st.nextToken().trim();   // token thứ 2 là tên thành phố
                             break;
                         }
-                       
+                        
                         res = thoiTiet.getWeather(city); // truyền tên thành phố vào hàm getWeather
                         System.out.println(line);
-                        
+
                     }
 
                 } else if (line.contains("whois;")) {
@@ -125,12 +127,33 @@ public class Worker implements Runnable {
                             break;
 
                         }
-                        
+
                         res = Whois.getInfoDomain(domain); // truyền tên domain vào hàm getWeather
                         System.out.println(line);
-                        
+
                     }
 
+                } else if (line.contains("thời tiết") || line.contains("xem port") || line.contains("vị trí ip") || line.contains("tên miền") || line.contains("chuyển đổi") || line.contains("quét")) {
+                     Random rand = new Random();
+                     int ranNum = rand.nextInt(5)+1;
+                   //  System.out.println("aaaaaaaaaaaaaaaaaa" + ranNum);
+                     if(ranNum == 1){
+                         res = "Bạn hãy ấn vào nút hướng dẫn ở góc phải màn hình để xem cú pháp";
+                     }
+                     else if(ranNum == 2){
+                         res = "Bạn ấn vô nút hướng dẫn ở trên kia đuy";
+                     }
+                     else if (ranNum == 3 ){
+                         res = "Ấn nút hướng dẫn bên phải để xem cú pháp kìa ông";
+                     }
+                     else if (ranNum == 4){
+                         res = "Click chuột vào hướng dẫn để xem cú pháp tra cứu nghen";
+                     }
+                     else if (ranNum == 5){
+                         res = "Nút hướng dẫn ở trên kìaaaaa";
+                     }
+                     
+                    
                 } else if (line.contains("iplocation;")) {
                     StringTokenizer st = new StringTokenizer(line, ";");
                     String syntax, ip = null;
@@ -144,7 +167,7 @@ public class Worker implements Runnable {
                         }
                         res = IpLocation.findIpInformation(ip); // truyền tên domain vào hàm findIpInfomation
                         System.out.println(line);
-                    
+
                     }
 
                 } else if (line.equals("chuyentien")) {
@@ -160,7 +183,7 @@ public class Worker implements Runnable {
                         res = " Sai cú pháp @@@@ Cú pháp quét port: 'quetport;' + 'địa chỉ ip' + 'port x' + port 'y' @@@@ vd: quetport;115.76.51.83;5623;6666";
                     } else {
                         while (st.hasMoreTokens()) {
-                           
+
                             syntax = st.nextToken(); // syntax là cờ hiệu nên không lấy
                             port = st.nextToken().trim();   // token thứ 2 là tên port muốn quét
                             x = st.nextToken().trim();   // quét từ port x
