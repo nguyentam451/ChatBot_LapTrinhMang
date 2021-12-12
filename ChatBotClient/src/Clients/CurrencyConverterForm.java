@@ -101,11 +101,13 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
 
         jLabel2.setText("Từ:");
         jPanel1.add(jLabel2);
+
         jLabel2.setBounds(110, 113, 30, 20);
 
         jLabel3.setText("Sang:");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(110, 223, 41, 20);
+
 
         btnChuyenDoi.setText("Chuyển đổi");
         btnChuyenDoi.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +125,8 @@ public class CurrencyConverterForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnThoat);
+
+
         btnThoat.setBounds(619, 561, 70, 30);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N

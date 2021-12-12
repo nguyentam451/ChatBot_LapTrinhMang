@@ -50,6 +50,7 @@ public class Whois {
                 }
                 in.close();
 
+                // bóc tách json
                 // response là chuỗi json
                 // bóc tách chuỗi json
                 JSONObject obj = new JSONObject(response.toString());
@@ -73,6 +74,8 @@ public class Whois {
                 for (int i = 0; i < nameServerArr.length(); i++) {
                     nameServer += (String) nameServerArr.get(i) + "; ";
                 }
+                
+                
                 String status = "";
                 JSONArray statusArr = obj.getJSONArray("status");
                 for (int i = 0; i < statusArr.length(); i++) {

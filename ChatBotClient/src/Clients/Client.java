@@ -109,9 +109,11 @@ public class Client {
 
     private void nhanClient() {
         try {
-
+            
+            // đọc dữ liệu từ server
             String tmp = in.readLine();
             System.out.println(tmp);
+            // giải mã
             serverResponse = AESClient.decrypt(tmp) + "\r\n";
             // nếu response có chứa chuỗi "\t" thì sẽ thực hiện tách các tokens thành từng dòng in ra cho đẹp :>
             System.out.println(serverResponse);
@@ -144,9 +146,13 @@ public class Client {
                 for (String item : myList) {
                     CurrencyConverterForm.comboboxListCity2.addItem(item);
                 }
+
+               
                 serverResponse = "";
                // System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk" +  myList);
             }
+            
+           
 
             txtArea.append(serverResponse);
         } catch (IOException ex) {
